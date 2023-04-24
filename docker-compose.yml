@@ -1,0 +1,51 @@
+version: '3.7'
+
+services:
+
+  web:
+    container_name: miniproject_frontend
+    image: codenetjp/jfga_frontend:221219 #da build san 
+    volumes:
+      - './web:/app/frontend'
+      - './web/node_modules:/app/frontend/node_modules'
+    env_file: .env
+    ports:
+      - '2000:2000'
+    expose:
+      - 2000
+    command: ["npm", "run", "serve", "--", "--port", "2000"]
+
+  api:
+    container_name: miniproject_backend
+    #image: codenetjp/jfga_backend:221219
+    build: 
+       context: api
+       dockerfile: Dockerfile
+    env_file: .env
+    volumes:
+      - ./api:/app/backend
+    ports:
+      - '2100:2100'
+    depends_on:
+      - db
+    entrypoint: [ "poetry", "run" ]
+    command: [ "uvicorn", "main:app", "--reload", "--host", "0.0.0.0", "--port", "2100" ]
+#    extra_hosts:
+#      - "external.ip.local.codenet.jp:172.17.0.1"
+    networks:
+      - default
+  db:
+    container_name: miniproject_db
+    image: postgres:14
+    ports:
+      - "2200:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=default
+    volumes:
+      - db14:/var/lib/postgresql/data
+
+volumes:
+  db14:
+    driver: local

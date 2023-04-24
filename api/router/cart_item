@@ -1,0 +1,10 @@
+from fastapi import APIRouter
+from schema.cartitem import Cart_itemBase, Cart_itemCreate
+from typing import List
+from playhouse.shortcuts import model_to_dict
+
+router = APIRouter()
+
+@router.get('/', response_model=Cart)
+def countcart_item(cart_id: ):
+    return CartModel.create(**cart.dict())
