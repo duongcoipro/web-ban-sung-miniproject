@@ -1,0 +1,64 @@
+CREATE TABLE category (
+	id bigserial NOT NULL,
+	"name" text NULL,
+	logo text NULL,
+	active bool NULL DEFAULT true,
+	CONSTRAINT pkey_category PRIMARY KEY (id)
+);
+
+CREATE TABLE "user" (
+	id bigserial NOT NULL,
+	user_name text NULL,
+	user_password text NULL,
+	tel text NULL,
+	email text NULL,
+	address text NULL,
+	user_type int4 NULL,
+	active bool NULL DEFAULT true,
+	CONSTRAINT pkey_user PRIMARY KEY (id)
+);
+
+CREATE TABLE product (
+	id bigserial NOT NULL,
+	"name" text NULL,
+	category int8 NULL,
+	"cost" int4 NULL,
+	price int4 NULL,
+	star int4 NULL,
+	img text NULL,
+	description text NULL,
+	sales int4 NULL,
+	active bool NULL DEFAULT true,
+	qty int4 NULL,
+	CONSTRAINT pkey_product PRIMARY KEY (id)
+);
+
+CREATE TABLE "order" (
+	id bigserial NOT NULL,
+	user_id int8 NULL,
+	product_id int8 NULL,
+	total_qty int4 NULL,
+	status text NULL,
+	total_price varchar NULL,
+	address varchar NULL,
+	phone int4 NULL,
+	gun_id int4 NULL,
+	gun_name varchar NULL,
+	gun_qty int4 NULL,
+	created_at varchar NULL,
+	active bool NULL,
+	user_name varchar NULL,
+	CONSTRAINT pkey_order PRIMARY KEY (id)
+);
+
+CREATE TABLE cart (
+	id int4 NULL,
+	user_id int8 NULL,
+	product_id int8 NULL,
+	total_qty int4 NULL,
+	price int4 NULL,
+	active bool NULL DEFAULT true,
+	img text NULL,
+	gun_name varchar NULL,
+	gun_star varchar NULL
+);
